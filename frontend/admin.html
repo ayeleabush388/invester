@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+    h2 { color: #333; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    button {
+      padding: 6px 12px;
+      margin: 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+    .approve { background-color: #28a745; color: white; }
+    .reject { background-color: #dc3545; color: white; }
+  </style>
+</head>
+<body>
+
+<h2>📋 FT Code Approval Dashboard</h2>
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Amount</th>
+      <th>FT Code</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="requests-body"></tbody>
+</table>
+
+<h2>💸 Withdrawal Approval Dashboard</h2>
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Amount</th>
+      <th>Requested At</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="withdrawals-body"></tbody>
+</table>
+
+<!-- NEW Loan Approval Dashboard -->
+<h2>🏦 Loan Approval Dashboard</h2>
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Amount (10% of wallet)</th>
+      <th>Requested At</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="loans-body"></tbody>
+</table>
+
+<script>
+  const API = "http://localhost:3000/api";
+
+  // Investment Requests
+  async function loadRequests() {
+    const res = await fetch(`${API}/admin/invest-requests`);
+    const data = await res.json();
+    const body = document.getElementById("requests-body");
+    body.innerHTML = "";
+    if (data.length === 0) {
+      body.innerHTML = `<tr><td colspan="5">No pending investment requests.</td></tr>`;
+      return;
+    }
+    data.forEach(req => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${req.user_id}</td>
+        <td>${req.amount}</td>
+        <td>${req.ft_code}</td>
+        <td>${req.status}</td>
+        <td>
+          <button class="approve" onclick="approve('${req.id}', ${req.amount}, '${req.user_id}')">✅ Approve</button>
+          <button class="reject" onclick="reject('${req.id}')">❌ Reject</button>
+        </td>
+      `;
+      body.appendChild(row);
+    });
+  }
+
+  async function approve(id, amount, userId) {
+    const res = await fetch(`${API}/admin/approve-request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, amount, user_id: userId })
+    });
+    const data = await res.json();
+    alert(data.message || "Action completed.");
+    loadRequests();
+  }
+
+  async function reject(id) {
+    const res = await fetch(`${API}/admin/reject-request`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    alert(data.message || "Action completed.");
+    loadRequests();
+  }
+
+  // Withdrawal Requests
+  async function loadWithdrawals() {
+    const res = await fetch(`${API}/admin/withdrawal-requests`);
+    const data = await res.json();
+    const body = document.getElementById("withdrawals-body");
+    body.innerHTML = "";
+    if (data.length === 0) {
+      body.innerHTML = `<tr><td colspan="5">No pending withdrawals.</td></tr>`;
+      return;
+    }
+    data.forEach(req => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${req.user_id}</td>
+        <td>${req.amount}</td>
+        <td>${new Date(req.requested_at).toLocaleString()}</td>
+        <td>${req.status}</td>
+        <td>
+          <button class="approve" onclick="approveWithdrawal('${req.id}')">✅ Approve</button>
+          <button class="reject" onclick="rejectWithdrawal('${req.id}')">❌ Reject</button>
+        </td>
+      `;
+      body.appendChild(row);
+    });
+  }
+
+  async function approveWithdrawal(id) {
+    const res = await fetch(`${API}/admin/approve-withdrawal`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    alert(data.message || "Withdrawal approved.");
+    loadWithdrawals();
+  }
+
+  async function rejectWithdrawal(id) {
+    const res = await fetch(`${API}/admin/reject-withdrawal`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    alert(data.message || "Withdrawal rejected.");
+    loadWithdrawals();
+  }
+
+  // NEW Loan Requests
+  async function loadLoans() {
+    const res = await fetch(`${API}/admin/loan-requests`);
+    const data = await res.json();
+    const body = document.getElementById("loans-body");
+    body.innerHTML = "";
+    if (data.length === 0) {
+      body.innerHTML = `<tr><td colspan="5">No pending loan requests.</td></tr>`;
+      return;
+    }
+    data.forEach(req => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${req.user_id}</td>
+        <td>${req.amount}</td>
+        <td>${new Date(req.requested_at).toLocaleString()}</td>
+        <td>${req.status}</td>
+        <td>
+          <button class="approve" onclick="approveLoan('${req.id}', '${req.user_id}', ${req.amount})">✅ Approve</button>
+          <button class="reject" onclick="rejectLoan('${req.id}')">❌ Reject</button>
+        </td>
+      `;
+      body.appendChild(row);
+    });
+  }
+
+  async function approveLoan(id, userId, amount) {
+    const res = await fetch(`${API}/admin/approve-loan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, user_id: userId, amount })
+    });
+    const data = await res.json();
+    alert(data.message || "Loan approved.");
+    loadLoans();
+  }
+
+  async function rejectLoan(id) {
+    const res = await fetch(`${API}/admin/reject-loan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    alert(data.message || "Loan rejected.");
+    loadLoans();
+  }
+
+  // Initial load
+  loadRequests();
+  loadWithdrawals();
+  loadLoans();
+
+</script>
+
+</body>
+</html>
