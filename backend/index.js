@@ -3,8 +3,16 @@ const cors = require("cors");
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
-app.use(cors());
+
+// ✅ Add correct CORS for frontend URL
+app.use(cors({
+  origin: ["https://invester-two.vercel.app"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
 app.use(express.json());
+
 
 // Supabase config (replace with your own keys)
 const supabase = createClient(
