@@ -3,16 +3,8 @@ const cors = require("cors");
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
-
-// ✅ Add correct CORS for frontend URL
-app.use(cors({
-  origin: ["https://invester-two.vercel.app"],
-  methods: ["GET", "POST"],
-  credentials: true
-}));
-
+app.use(cors());
 app.use(express.json());
-
 
 // Supabase config (replace with your own keys)
 const supabase = createClient(
@@ -439,3 +431,4 @@ app.post("/api/admin/reject-loan", async (req, res) => {
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
