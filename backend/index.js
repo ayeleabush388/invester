@@ -428,6 +428,17 @@ app.post("/api/admin/reject-loan", async (req, res) => {
   res.json({ message: "Loan request rejected." });
 });
 
+
+const path = require("path");
+
+// Serve static files from the frontend folder
+app.use(express.static(path.join(__dirname, "frontend")));
+
+// Serve admin.html on /admin route
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "admin.html"));
+});
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
