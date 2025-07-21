@@ -5,44 +5,151 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Investment Dashboard</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f2f2f2;
-    }
-    header {
-      background-color: #338;
-      color: #fff;
-      padding: 15px;
-      display: flex;
-      justify-content: space-around;
-    }
-    header button {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .container {
-      max-width: 1400px;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      box-sizing: border-box;
-    }
-    .hidden { display: none; }
-    .success { color: green; }
-    .error { color: red; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+   body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f2f2f2;
+  overflow-x: hidden; /* prevent sideways scroll */
+}
+
+header {
+  background-color: #338;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+  gap: 8px; /* spacing between buttons */
+}
+
+header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 100px; /* keep buttons minimum width */
+  padding: 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+header button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%; /* responsive width */
+  box-sizing: border-box;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline-offset: 2px;
+}
+
+input:focus, button:focus {
+  outline: 2px solid #338;
+}
+
+button {
+  background-color: #338;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-height: 44px; /* touch-friendly height */
+}
+
+button:hover {
+  background-color: #226;
+}
+
+.hidden { display: none; }
+
+.success { color: green; }
+
+.error { color: red; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Responsive styles for mobile screens */
+
+@media only screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+  }
+  
+  header button {
+    min-width: unset;
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+  
+  .container {
+    padding: 15px;
+    width: 95%;
+  }
+
+  input, button {
+    font-size: 1.1rem;
+    padding: 14px 12px;
+  }
+
+  h2, h3, h4 {
+    font-weight: 600;
+  }
+
+  /* Grid for levels stacks vertically */
+  #dashboard-section > div[style*="display: grid"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  /* Share invite input and button full width */
+  #share-section div[style*="display: flex"] {
+    flex-direction: column;
+  }
+
+  #share-section input {
+    margin-bottom: 10px;
+  }
+
+  #share-section button {
+    width: 100%;
+  }
+}
+
   </style>
 </head>
 <body>
