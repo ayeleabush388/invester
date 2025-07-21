@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,6 +150,7 @@
         width: 100%;
       }
     }
+    
   </style>
 </head>
 <body>
@@ -361,16 +363,16 @@
 
 <script>
   function toggleMenu() {
-    const menu = document.getElementById("dropdown-menu");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-  }
-  
-  // Show profile icon when user logs in
-  function showProfileMenu() {
-    document.getElementById("profile-menu-container").style.display = "block";
-  }
-  
-  const API = "https://invester-1.onrender.com";
+  const menu = document.getElementById("dropdown-menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Show profile icon when user logs in
+function showProfileMenu() {
+  document.getElementById("profile-menu-container").style.display = "block";
+}
+
+const API = "https://invester-1.onrender.com";
   let userId = null;
 
   function showSection(section) {
@@ -628,4 +630,3 @@
 </script>
 </body>
 </html>
-
