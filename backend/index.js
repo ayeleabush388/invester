@@ -173,46 +173,35 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 });
 
 // Admin Withdrawal Approval
-// Approve withdrawal
+// Approve Withdrawal Request (Admin)
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
 
-  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
-    .eq("id", id.toString()) // Ensure it's a string (UUID match)
-    .select(); // Include select() to confirm result
+    .eq("id", id);
 
-  if (error) {
-    console.error("Error approving withdrawal:", error.message);
-    return res.status(500).json({ error: error.message });
-  }
+  if (error) return res.status(500).json({ error: error.message });
 
-  res.json({ message: "Withdrawal approved", data });
+  res.json({ message: "Withdrawal approved." });
 });
 
+
 // Reject withdrawal
+// Reject Withdrawal Request (Admin)
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
 
-  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
-    .eq("id", id.toString()) // Ensure it's a string (UUID match)
-    .select();
+    .eq("id", id);
 
-  if (error) {
-    console.error("Error rejecting withdrawal:", error.message);
-    return res.status(500).json({ error: error.message });
-  }
+  if (error) return res.status(500).json({ error: error.message });
 
-  res.json({ message: "Withdrawal rejected", data });
+  res.json({ message: "Withdrawal rejected." });
 });
-
 
 
 
