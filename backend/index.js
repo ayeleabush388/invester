@@ -129,6 +129,7 @@ app.post("/api/withdraw", async (req, res) => {
   if (amount < 200)
     return res.status(400).json({ error: "Minimum withdrawal amount is 200 birr" });
 
+  // Get user wallet
   const { data: wallet, error: walletError } = await supabase
     .from("wallets")
     .select("balance")
@@ -139,14 +140,24 @@ app.post("/api/withdraw", async (req, res) => {
   if (!wallet || wallet.balance < amount)
     return res.status(400).json({ error: "Insufficient balance" });
 
-  // Insert withdrawal request with status pending
+  // ✅ Immediately deduct the amount
+  const { error: deductError } = await supabase
+    .from("wallets")
+    .update({ balance: wallet.balance - amount })
+    .eq("user_id", user_id);
+
+  if (deductError) return res.status(500).json({ error: deductError.message });
+
+  // ✅ Then insert withdrawal request as pending
   const { error: insertError } = await supabase
     .from("withdrawals")
     .insert([{ user_id, amount, status: "pending", requested_at: new Date().toISOString() }]);
+    
   if (insertError) return res.status(500).json({ error: insertError.message });
 
-  res.json({ message: "Withdrawal request submitted and awaiting approval." });
+  res.json({ message: "Withdrawal request submitted and balance deducted immediately." });
 });
+
 
 // Get Withdrawals of User
 app.get("/api/withdrawals/:userId", async (req, res) => {
@@ -162,53 +173,20 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 });
 
 // Admin Withdrawal Approval
-app.get("/api/admin/withdrawal-requests", async (req, res) => {
-  const { data, error } = await supabase
-    .from("withdrawals")
-    .select("*")
-    .eq("status", "pending");
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
-});
-
+// Just approve the status — no more wallet update
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
 
-  // Get withdrawal info
-  const { data: withdrawal, error: withdrawalError } = await supabase
-    .from("withdrawals")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
-  if (withdrawalError) return res.status(500).json({ error: withdrawalError.message });
-  if (!withdrawal) return res.status(404).json({ error: "Withdrawal not found" });
-
-  // Update withdrawal status to approved
   const { error: updateError } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
     .eq("id", id);
+
   if (updateError) return res.status(500).json({ error: updateError.message });
 
-  // Deduct amount from wallet
-  const { data: wallet, error: walletError } = await supabase
-    .from("wallets")
-    .select("balance")
-    .eq("user_id", withdrawal.user_id)
-    .maybeSingle();
-  if (walletError) return res.status(500).json({ error: walletError.message });
-
-  if (!wallet || wallet.balance < withdrawal.amount)
-    return res.status(400).json({ error: "Insufficient wallet balance" });
-
-  const { error: walletUpdateError } = await supabase
-    .from("wallets")
-    .update({ balance: wallet.balance - withdrawal.amount })
-    .eq("user_id", withdrawal.user_id);
-  if (walletUpdateError) return res.status(500).json({ error: walletUpdateError.message });
-
-  res.json({ message: "Withdrawal approved and wallet updated." });
+  res.json({ message: "Withdrawal approved." });
 });
+
 
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
