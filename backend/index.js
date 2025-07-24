@@ -176,27 +176,32 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 // Just approve the status — no more wallet update
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
 
-  const { error: updateError } = await supabase
+  const { error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
     .eq("id", id);
 
-  if (updateError) return res.status(500).json({ error: updateError.message });
+  if (error) return res.status(500).json({ error: error.message });
 
-  res.json({ message: "Withdrawal approved." });
+  res.json({ message: "Withdrawal approved successfully." });
 });
-
 
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
+  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
+
   const { error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
     .eq("id", id);
+
   if (error) return res.status(500).json({ error: error.message });
-  res.json({ message: "Withdrawal rejected." });
+
+  res.json({ message: "Withdrawal rejected successfully." });
 });
+
 
 // LEVEL INVESTMENT (for completeness)
 // ✅ Activate Level Investment
