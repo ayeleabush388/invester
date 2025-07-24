@@ -173,51 +173,46 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 });
 
 // Admin Withdrawal Approval
-// Just approve the status — no more wallet update
+// Approve withdrawal
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
 
-  if (!id) {
-    return res.status(400).json({ error: "Missing withdrawal ID" });
-  }
+  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
 
-  console.log("Approving withdrawal with ID:", id);
-
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
-    .eq("id", id.toString()); // Ensure ID is string
+    .eq("id", id.toString()) // Ensure it's a string (UUID match)
+    .select(); // Include select() to confirm result
 
   if (error) {
-    console.error("Update error:", error);
+    console.error("Error approving withdrawal:", error.message);
     return res.status(500).json({ error: error.message });
   }
 
-  res.json({ message: "Withdrawal approved successfully." });
+  res.json({ message: "Withdrawal approved", data });
 });
 
-
+// Reject withdrawal
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
 
-  if (!id) {
-    return res.status(400).json({ error: "Missing withdrawal ID" });
-  }
+  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
 
-  console.log("Rejecting withdrawal with ID:", id);
-
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
-    .eq("id", id.toString()); // Ensure ID is string
+    .eq("id", id.toString()) // Ensure it's a string (UUID match)
+    .select();
 
   if (error) {
-    console.error("Update error:", error);
+    console.error("Error rejecting withdrawal:", error.message);
     return res.status(500).json({ error: error.message });
   }
 
-  res.json({ message: "Withdrawal rejected successfully." });
+  res.json({ message: "Withdrawal rejected", data });
 });
+
 
 
 
