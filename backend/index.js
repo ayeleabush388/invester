@@ -176,31 +176,49 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 // Just approve the status — no more wallet update
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
-  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
+
+  if (!id) {
+    return res.status(400).json({ error: "Missing withdrawal ID" });
+  }
+
+  console.log("Approving withdrawal with ID:", id);
 
   const { error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
-    .eq("id", id);
+    .eq("id", id.toString()); // Ensure ID is string
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Update error:", error);
+    return res.status(500).json({ error: error.message });
+  }
 
   res.json({ message: "Withdrawal approved successfully." });
 });
 
+
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
-  if (!id) return res.status(400).json({ error: "Missing withdrawal ID" });
+
+  if (!id) {
+    return res.status(400).json({ error: "Missing withdrawal ID" });
+  }
+
+  console.log("Rejecting withdrawal with ID:", id);
 
   const { error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
-    .eq("id", id);
+    .eq("id", id.toString()); // Ensure ID is string
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Update error:", error);
+    return res.status(500).json({ error: error.message });
+  }
 
   res.json({ message: "Withdrawal rejected successfully." });
 });
+
 
 
 // LEVEL INVESTMENT (for completeness)
