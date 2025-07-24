@@ -174,19 +174,9 @@ th, td {
 <!-- Profile Icon and Dropdown -->
 <div id="profile-menu-container" style="position: absolute; top: 10px; right: 10px; display: none;">
   <button id="profile-btn" onclick="toggleMenu()" aria-label="Open menu" style="background: transparent; border: none; cursor: pointer; font-size: 1.5rem; color: #338;">
+    
     👤
-  </button>
-  <div id="dropdown-menu" style="display: none; position: absolute; right: 0; top: 40px; background: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 999;">
-    <button onclick="showSection('dashboard')">Dashboard</button>
-    <button onclick="showSection('invest')">Invest</button>
-    <button onclick="showSection('balance')">Balance</button>
-    <button onclick="showSection('loan')">Loan</button>
-    <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
-    <button onclick="logout()">Logout</button>
-  </div>
-</div>
-
-<div id="telegram-support" style="text-align: center; margin-top: 10px;">
+    <div id="telegram-support" style="text-align: center; margin-top: 10px;">
   <a href="https://t.me/YourTelegramGroup" target="_blank" style="
     display: inline-block;
     background-color: #0088cc;
@@ -201,8 +191,17 @@ th, td {
   </a>
 </div>
 
+  </button>
+  <div id="dropdown-menu" style="display: none; position: absolute; right: 0; top: 40px; background: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 999;">
+    <button onclick="showSection('dashboard')">Dashboard</button>
+    <button onclick="showSection('invest')">Invest</button>
+    <button onclick="showSection('balance')">Balance</button>
+    <button onclick="showSection('loan')">Loan</button>
+    <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
 
-  
 
 <div class="container">
   <!-- Login Section -->
