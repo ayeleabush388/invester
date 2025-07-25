@@ -68,7 +68,8 @@
 const API = "https://invester-1.onrender.com/api";
   // Investment Requests
   async function loadRequests() {
-    const res = await fetch(`${API}/admin/invest-requests`);
+   const res = await fetch(`${API}/admin/withdrawals`);
+
     const data = await res.json();
     const body = document.getElementById("requests-body");
     body.innerHTML = "";
