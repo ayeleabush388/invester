@@ -184,67 +184,26 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 });
 
 // Admin Withdrawal Approval
-// Approve Withdrawal Request (Admin)
-// If you're using service_role key (highly recommended for admin actions)
-const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
-
-// Approve Withdrawal Request (Admin)
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
-  console.log("Approve withdrawal - received body:", req.body);
-
-  if (!id) {
-    return res.status(400).json({ error: "Missing withdrawal ID." });
-  }
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
-    .eq("id", id)
-    .select(); // return the updated row for debug
-
-  if (error) {
-    console.error("Error approving withdrawal:", error);
-    return res.status(500).json({ error: error.message });
-  }
-
-  if (data.length === 0) {
-    console.warn("No withdrawal found with the given ID.");
-    return res.status(404).json({ error: "Withdrawal not found." });
-  }
-
-  console.log("Approved withdrawal:", data);
-  res.json({ message: "Withdrawal approved.", data });
+    .eq("id", id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ message: "Withdrawal approved." });
 });
 
-// Reject Withdrawal Request (Admin)
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
-  console.log("Reject withdrawal - received body:", req.body);
-
-  if (!id) {
-    return res.status(400).json({ error: "Missing withdrawal ID." });
-  }
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
-    .eq("id", id)
-    .select();
-
-  if (error) {
-    console.error("Error rejecting withdrawal:", error);
-    return res.status(500).json({ error: error.message });
-  }
-
-  if (data.length === 0) {
-    console.warn("No withdrawal found with the given ID.");
-    return res.status(404).json({ error: "Withdrawal not found." });
-  }
-
-  console.log("Rejected withdrawal:", data);
-  res.json({ message: "Withdrawal rejected.", data });
+    .eq("id", id);
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ message: "Withdrawal rejected." });
 });
+
 
 
 // LEVEL INVESTMENT (for completeness)
