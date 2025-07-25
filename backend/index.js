@@ -186,21 +186,30 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 // Admin Withdrawal Approval
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
+  console.log("Backend received approve request for ID:", id); // 👈 Log here
   const { error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
     .eq("id", id);
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Error updating withdrawal status:", error); // 👈 Log any errors
+    return res.status(500).json({ error: error.message });
+  }
   res.json({ message: "Withdrawal approved." });
 });
 
+
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
+  console.log("Backend received reject request for ID:", id); // 👈 Log here
   const { error } = await supabase
     .from("withdrawals")
     .update({ status: "rejected" })
     .eq("id", id);
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Error updating withdrawal status:", error); // 👈 Log any errors
+    return res.status(500).json({ error: error.message });
+  }
   res.json({ message: "Withdrawal rejected." });
 });
 
