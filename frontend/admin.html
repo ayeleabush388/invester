@@ -142,26 +142,28 @@
   }
 
   async function approveWithdrawal(id) {
-    const res = await fetch(`${API}/admin/approve-withdrawal`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id })
-    });
-    const data = await res.json();
-    alert(data.message || "Withdrawal approved.");
-    loadWithdrawals();
-  }
+  console.log("Approving withdrawal with ID:", id); // 👈 Log here
+  const res = await fetch(`${API}/admin/approve-withdrawal`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  });
+  const data = await res.json();
+  alert(data.message || "Withdrawal approved.");
+  loadWithdrawals();
+}
 
-  async function rejectWithdrawal(id) {
-    const res = await fetch(`${API}/admin/reject-withdrawal`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id })
-    });
-    const data = await res.json();
-    alert(data.message || "Withdrawal rejected.");
-    loadWithdrawals();
-  }
+async function rejectWithdrawal(id) {
+  console.log("Rejecting withdrawal with ID:", id); // 👈 Log here
+  const res = await fetch(`${API}/admin/reject-withdrawal`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  });
+  const data = await res.json();
+  alert(data.message || "Withdrawal rejected.");
+  loadWithdrawals();
+}
 
   // NEW Loan Requests
   async function loadLoans() {
