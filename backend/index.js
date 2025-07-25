@@ -187,6 +187,7 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 // Approve Withdrawal Request (Admin)
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
+console.log("Approve withdrawal ID:", id);
 
   const { error } = await supabase
     .from("withdrawals")
@@ -203,6 +204,7 @@ app.post("/api/admin/approve-withdrawal", async (req, res) => {
 // Reject Withdrawal Request (Admin)
 app.post("/api/admin/reject-withdrawal", async (req, res) => {
   const { id } = req.body;
+console.log("Rejecting withdrawal ID:", id); // ✅ DEBUG LINE
 
   const { error } = await supabase
     .from("withdrawals")
