@@ -1,3 +1,11 @@
+const cron = require("node-cron");
+const fetch = require("node-fetch"); // Required for Node <18
+
+
+
+
+
+
 const express = require("express");
 const cors = require("cors");
 const { createClient } = require("@supabase/supabase-js");
@@ -274,31 +282,59 @@ app.post("/api/level-invest", async (req, res) => {
 
 
 
-// ✅ Distribute Daily Profit — Call this manually or set as CRON job
+// Distribute Daily Profit (cron)
 app.post("/api/distribute-daily-profit", async (req, res) => {
-  const { data: activeLevels, error } = await supabase
+  const { data: activeInvestments, error } = await supabase
     .from("level_investments")
     .select("*")
-    .gt("days_remaining", 0);
+    .eq("active", true);
 
-  if (error)
-    return res.status(500).json({ error: error.message });
+  if (error) return res.status(500).json({ error: error.message });
 
-  for (const entry of activeLevels) {
-    // Add profit to wallet
-    await supabase.rpc("increment_wallet_balance", {
-      uid: entry.user_id,
-      amt: entry.daily_profit,
-    });
+  for (const entry of activeInvestments) {
+    const newDays = entry.days_completed + 1;
+    const newBalance = entry.balance + entry.daily_profit;
 
-    // Decrease remaining days
     await supabase
       .from("level_investments")
-      .update({ days_remaining: entry.days_remaining - 1 })
+      .update({
+        days_completed: newDays,
+        balance: newBalance,
+        active: newDays < 30,
+      })
       .eq("id", entry.id);
+
+    // Update user wallet
+    await supabase.rpc("increment_user_wallet", {
+      user_id_input: entry.user_id,
+      amount: entry.daily_profit,
+    });
+
+    // 🆕 Add profit history record
+    await supabase.from("daily_profits").insert([{
+      user_id: entry.user_id,
+      level: entry.level,
+      profit_amount: entry.daily_profit,
+      date_given: new Date().toISOString().split('T')[0],
+    }]);
   }
 
-  res.json({ message: "Daily profit distributed to all active level investors." });
+  res.send("Profit distributed.");
+});
+
+// Get user’s level investments
+app.get("/api/user-levels/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  const { data, error } = await supabase
+    .from("level_investments")
+    .select("*")
+    .eq("user_id", userId)
+    .order("start_date", { ascending: false });
+
+  if (error) return res.status(500).json({ error: error.message });
+
+  res.json(data);
 });
 
 
@@ -427,4 +463,20 @@ app.get("/admin", (req, res) => {
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+
+
+
+// Schedule profit distribution every day at midnight
+cron.schedule("0 0 * * *", async () => {
+  console.log("Running automatic daily profit distribution...");
+  try {
+    await fetch("http://localhost:3000/api/distribute-daily-profit", {
+      method: "POST",
+    });
+    console.log("Profit distributed successfully.");
+  } catch (error) {
+    console.error("Error distributing profit:", error.message);
+  }
+});
 
