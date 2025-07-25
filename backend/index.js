@@ -187,18 +187,21 @@ app.get("/api/withdrawals/:userId", async (req, res) => {
 // Approve Withdrawal Request (Admin)
 app.post("/api/admin/approve-withdrawal", async (req, res) => {
   const { id } = req.body;
-console.log("Approve withdrawal ID:", id);
+  console.log("Approve withdrawal ID:", id);
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("withdrawals")
     .update({ status: "approved" })
     .eq("id", id);
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) {
+    console.error("Error approving withdrawal:", error);
+    return res.status(500).json({ error: error.message });
+  }
 
+  console.log("Approved withdrawal data:", data);
   res.json({ message: "Withdrawal approved." });
 });
-
 
 // Reject withdrawal
 // Reject Withdrawal Request (Admin)
