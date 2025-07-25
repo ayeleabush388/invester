@@ -157,6 +157,17 @@ app.post("/api/withdraw", async (req, res) => {
 
   res.json({ message: "Withdrawal request submitted and balance deducted immediately." });
 });
+// ✅ Admin: Get all pending withdrawal requests
+app.get("/api/admin/withdrawals", async (req, res) => {
+  const { data, error } = await supabase
+    .from("withdrawals")
+    .select("*")
+    .eq("status", "pending")
+    .order("requested_at", { ascending: false });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
 
 
 // Get Withdrawals of User
