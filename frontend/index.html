@@ -175,9 +175,15 @@ th, td {
 <!-- Profile Icon and Dropdown -->
 <div id="profile-menu-container" style="position: absolute; top: 10px; right: 10px; display: none;">
   <button id="profile-btn" onclick="toggleMenu()" aria-label="Open menu" style="background: transparent; border: none; cursor: pointer; font-size: 1.5rem; color: #338;">
-    👤
-  </button>
+    👤  
+<div id="telegram-icon">
+  <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 24px; height: 24px; margin-top: 6px; cursor: pointer;" />
+  </a>
+</div>
 
+
+  </button>
   <div id="dropdown-menu" style="display: none; position: absolute; right: 0; top: 40px; background: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 999;">
     <button onclick="showSection('dashboard')">Dashboard</button>
     <button onclick="showSection('invest')">Invest</button>
@@ -185,16 +191,8 @@ th, td {
     <button onclick="showSection('loan')">Loan</button>
     <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
     <button onclick="logout()">Logout</button>
-
-    <!-- 🔽 Telegram icon at bottom of dropdown menu -->
-    <div id="telegram-icon" style="padding: 8px; text-align: center;">
-      <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 24px; height: 24px; cursor: pointer;" />
-      </a>
-    </div>
   </div>
 </div>
-
 
 <div class="container">
   <!-- Login Section -->
@@ -395,21 +393,6 @@ th, td {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-
-
-function loginSuccessful() {
-  document.getElementById("profile-menu-container").style.display = "block";
-}
-
-function logout() {
-  document.getElementById("profile-menu-container").style.display = "none";
-  // your other logout logic...
-}
-
-
-
-
-  
 // Show profile icon when user logs in
 function showProfileMenu() {
   document.getElementById("profile-menu-container").style.display = "block";
