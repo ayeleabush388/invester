@@ -167,9 +167,33 @@ th, td {
   }
 }
 
+
+
+    @media only screen and (max-width: 768px) {
+  header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  header button {
+    width: auto;
+    min-width: 90px;
+    margin: 4px;
+  }
+}
+
   </style>
 </head>
 <body>
+<header id="navbar">
+  <button onclick="showSection('dashboard')">Dashboard</button>
+  <button onclick="showSection('invest')">Invest</button>
+  <button onclick="showSection('balance')">Balance</button>
+  <button onclick="showSection('loan')">Loan</button>
+  <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
+  <button onclick="logout()">Logout</button>
+</header>
 
 
 <!-- Profile Icon and Dropdown -->
