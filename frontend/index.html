@@ -197,7 +197,26 @@ th, td {
 <!-- Main Content Wrapper -->
 <div id="main-content" style="transition: margin-left 0.3s;">
   <div class="container">
-    <!-- all your original content remains here -->
+
+
+
+
+
+    <!-- Icons container, hidden by default -->
+<div id="top-icons" style="display: none;">
+  <!-- Telegram Icon -->
+  <div style="position: fixed; top: 10px; right: 20px; z-index: 1000;">
+    <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 30px; height: 30px;" />
+    </a>
+  </div>
+
+  <!-- Menu Icon -->
+  <div style="position: fixed; top: 10px; left: 10px; z-index: 1000;">
+    <button onclick="toggleSideMenu()" style="background: none; border: none; font-size: 24px; cursor: pointer;">☰</button>
+  </div>
+</div>
+
 
 <div class="container">
   <!-- Login Section -->
@@ -393,11 +412,22 @@ th, td {
 
 
 <script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("top-icons").style.display = "none"; // hide on load
+});
+
+
+
+
+
+  
   function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
-
+  
 // Show profile icon when user logs in
 function showProfileMenu() {
   document.getElementById("profile-menu-container").style.display = "block";
@@ -465,7 +495,8 @@ const API = "https://invester-1.onrender.com/api";
       userId = data.user?.id || data.session?.user?.id;
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
-      document.getElementById("top-icons").style.display = "block";
+     document.getElementById("top-icons").style.display = "block"; // show on login
+
 
       showSection("dashboard");
     } catch {
