@@ -171,28 +171,17 @@ th, td {
 </head>
 <body>
 
-<!-- Navbar (Left Top) -->
-<div id="navbar" style="position: absolute; top: 10px; left: 10px;">
-  <button id="profile-btn" onclick="toggleMenu()" aria-label="Open menu" style="background: transparent; border: none; cursor: pointer; font-size: 1.5rem; color: #338;">
-    👤
-  </button>
-  <div id="dropdown-menu" style="display: none; position: absolute; top: 40px; left: 0; background: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 999;">
-    <button onclick="showSection('dashboard')">Dashboard</button>
-    <button onclick="showSection('invest')">Invest</button>
-    <button onclick="showSection('balance')">Balance</button>
-    <button onclick="showSection('loan')">Loan</button>
-    <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
-    <button onclick="logout()">Logout</button>
-  </div>
+<!-- Navbar (Top Left) -->
+<div id="navbar" style="position: absolute; top: 10px; left: 10px; display: none;">
+  <h3 style="margin: 0; color: #333;">Youth Investment Platform</h3>
 </div>
 
-<!-- Telegram Icon (Right Top) -->
-<div id="telegram-icon" style="position: absolute; top: 10px; right: 10px;">
+<!-- Telegram Icon (Top Right) -->
+<div id="telegram-icon" style="position: absolute; top: 10px; right: 10px; display: none;">
   <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
     <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 28px; height: 28px; cursor: pointer;" />
   </a>
 </div>
-
 
 
 
@@ -649,11 +638,12 @@ const API = "https://invester-1.onrender.com/api";
       alert("Failed to copy invite link.");
     });
   }
-  function showTelegramIcon() {
+  
+// Call this function after successful login
+  function showAfterLoginUI() {
     document.getElementById('telegram-icon').style.display = 'block';
+    document.getElementById('navbar').style.display = 'block';
   }
-
-
   // Initial load
   showSection("login-section");
 
