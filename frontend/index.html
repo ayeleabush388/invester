@@ -172,51 +172,30 @@ th, td {
 </head>
 <body>
 
-<!-- Telegram Icon at Top Right of Container -->
-<div style="position: fixed; top: 10px; right: 20px; z-index: 1000;">
-  <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 30px; height: 30px;" />
-  </a>
-</div>
+<body>
+  <!-- 🔽 Put this at the very top inside <body> -->
 
-<!-- Side Navbar -->
-<div id="side-menu" style="position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background: #338; color: white; z-index: 999; padding-top: 60px; transition: 0.3s;">
-  <button onclick="showSection('dashboard')">Dashboard</button>
-  <button onclick="showSection('invest')">Invest</button>
-  <button onclick="showSection('balance')">Balance</button>
-  <button onclick="showSection('loan')">Loan</button>
-  <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
-  <button onclick="logout()">Logout</button>
-</div>
+  <!-- Icons container: hidden by default -->
+  <div id="top-icons" style="display: none;">
+    <!-- Telegram Icon -->
+    <div style="position: fixed; top: 10px; right: 20px; z-index: 1000;">
+      <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 30px; height: 30px;" />
+      </a>
+    </div>
 
-<!-- Menu Icon (top-left) -->
-<div style="position: fixed; top: 10px; left: 10px; z-index: 1001;">
-  <button onclick="toggleSideMenu()" aria-label="Open Menu" style="font-size: 24px; background: transparent; border: none; color: #338; cursor: pointer;">☰</button>
-</div>
-
-<!-- Main Content Wrapper -->
-<div id="main-content" style="transition: margin-left 0.3s;">
-  <div class="container">
-
-
-
-
-
-    <!-- Icons container, hidden by default -->
-<div id="top-icons" style="display: none;">
-  <!-- Telegram Icon -->
-  <div style="position: fixed; top: 10px; right: 20px; z-index: 1000;">
-    <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 30px; height: 30px;" />
-    </a>
+    <!-- Menu Icon -->
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 1000;">
+      <button onclick="toggleSideMenu()" style="background: none; border: none; font-size: 24px; cursor: pointer;">☰</button>
+    </div>
   </div>
 
-  <!-- Menu Icon -->
-  <div style="position: fixed; top: 10px; left: 10px; z-index: 1000;">
-    <button onclick="toggleSideMenu()" style="background: none; border: none; font-size: 24px; cursor: pointer;">☰</button>
+  <!-- 🔽 This is your login section (already in your file) -->
+  <div id="login-section" style="padding: 20px;">
+    <!-- login form -->
   </div>
-</div>
 
+  <!-- Rest of your content below -->
 
 <div class="container">
   <!-- Login Section -->
