@@ -508,6 +508,8 @@ const API = "https://invester-1.onrender.com/api";
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
       showSection("dashboard");
+
+      document.getElementById("menu-icon-container").style.display = "block";
     } catch {
       showMessage("Network error. Please try again.", true);
     }
