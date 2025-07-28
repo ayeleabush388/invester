@@ -172,30 +172,27 @@ th, td {
 </head>
 <body>
 
-<body>
-  <!-- 🔽 Put this at the very top inside <body> -->
+<!-- Profile Icon and Dropdown -->
+<div id="profile-menu-container" style="position: absolute; top: 10px; right: 10px; display: none;">
+  <button id="profile-btn" onclick="toggleMenu()" aria-label="Open menu" style="background: transparent; border: none; cursor: pointer; font-size: 1.5rem; color: #338;">
+    👤  
+<div id="telegram-icon">
+  <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 24px; height: 24px; margin-top: 6px; cursor: pointer;" />
+  </a>
+</div>
 
-  <!-- Icons container: hidden by default -->
-  <div id="top-icons" style="display: none;">
-    <!-- Telegram Icon -->
-    <div style="position: fixed; top: 10px; right: 20px; z-index: 1000;">
-      <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 30px; height: 30px;" />
-      </a>
-    </div>
 
-    <!-- Menu Icon -->
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 1000;">
-      <button onclick="toggleSideMenu()" style="background: none; border: none; font-size: 24px; cursor: pointer;">☰</button>
-    </div>
+  </button>
+  <div id="dropdown-menu" style="display: none; position: absolute; right: 0; top: 40px; background: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 999;">
+    <button onclick="showSection('dashboard')">Dashboard</button>
+    <button onclick="showSection('invest')">Invest</button>
+    <button onclick="showSection('balance')">Balance</button>
+    <button onclick="showSection('loan')">Loan</button>
+    <button onclick="showSection('withdrawal-dashboard')">Withdrawals</button>
+    <button onclick="logout()">Logout</button>
   </div>
-
-  <!-- 🔽 This is your login section (already in your file) -->
-  <div id="login-section" style="padding: 20px;">
-    <!-- login form -->
-  </div>
-
-  <!-- Rest of your content below -->
+</div>
 
 <div class="container">
   <!-- Login Section -->
@@ -391,27 +388,18 @@ th, td {
 
 
 <script>
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("top-icons").style.display = "none"; // hide on load
-});
-
-
-
-
-
-  
   function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
-  
+
 // Show profile icon when user logs in
 function showProfileMenu() {
   document.getElementById("profile-menu-container").style.display = "block";
 }
-  
+  function showTelegramIcon() {
+  document.getElementById("telegram-icon").style.display = "block";
+}
 const API = "https://invester-1.onrender.com/api";
   let userId = null;
 
@@ -474,9 +462,6 @@ const API = "https://invester-1.onrender.com/api";
       userId = data.user?.id || data.session?.user?.id;
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
-     document.getElementById("top-icons").style.display = "block"; // show on login
-
-
       showSection("dashboard");
     } catch {
       showMessage("Network error. Please try again.", true);
@@ -664,23 +649,7 @@ const API = "https://invester-1.onrender.com/api";
       alert("Failed to copy invite link.");
     });
   }
-
-
-
-
-
-  function toggleSideMenu() {
-  const menu = document.getElementById("side-menu");
-  const main = document.getElementById("main-content");
-  if (menu.style.left === "0px") {
-    menu.style.left = "-250px";
-    main.style.marginLeft = "0";
-  } else {
-    menu.style.left = "0px";
-    main.style.marginLeft = "250px";
-  }
-}
-
+  
 
   // Initial load
   showSection("login-section");
