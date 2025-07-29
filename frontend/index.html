@@ -516,6 +516,8 @@ const API = "https://invester-1.onrender.com/api";
       userId = data.user?.id || data.session?.user?.id;
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
+      document.getElementById("telegram-icon").style.display = "block";
+
       showSection("dashboard");
     } catch {
       showMessage("Network error. Please try again.", true);
