@@ -170,8 +170,7 @@ th, td {
 
 
 
-
-    #menu-icon {
+.menu-icon {
   font-size: 28px;
   position: fixed;
   top: 15px;
@@ -183,7 +182,7 @@ th, td {
 #sidebar-menu {
   position: fixed;
   top: 0;
-  left: -250px; /* Hidden by default */
+  left: -250px;
   width: 250px;
   height: 100%;
   background: #f0f0f0;
@@ -209,11 +208,13 @@ body.sidebar-open main, body.sidebar-open .content {
   transition: transform 0.3s ease;
 }
 
+
   </style>
 </head>
 <body>
-
-<div id="menu-icon" onclick="toggleSidebar()">☰</div>
+<div id="profile-menu-container" style="display: none;">
+  <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+</div>
 
 <!-- Sidebar Menu -->
 <div id="sidebar-menu">
@@ -226,6 +227,8 @@ body.sidebar-open main, body.sidebar-open .content {
   <button onclick="showSection('loan')">💳 Loan</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
+
+
 
 <div class="container">
   <!-- Login Section -->
@@ -685,16 +688,18 @@ const API = "https://invester-1.onrender.com/api";
 
 
   function toggleSidebar() {
-  const sidebar = document.getElementById("sidebar-menu");
-  const body = document.body;
-  if (sidebar.style.left === "0px") {
-    sidebar.style.left = "-250px";
-    body.classList.remove("sidebar-open");
-  } else {
-    sidebar.style.left = "0px";
-    body.classList.add("sidebar-open");
+    const sidebar = document.getElementById("sidebar-menu");
+    const body = document.body;
+    if (sidebar.style.left === "0px") {
+      sidebar.style.left = "-250px";
+      body.classList.remove("sidebar-open");
+    } else {
+      sidebar.style.left = "0px";
+      body.classList.add("sidebar-open");
+    }
   }
-}
+
+
 
 
   // Initial load
