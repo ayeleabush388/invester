@@ -239,12 +239,6 @@ body.sidebar-open main {
   <button onclick="showSection('level')">🎮 Levels</button>
   <button onclick="showSection('loan')">💳 Loan</button>
   <button onclick="logout()">🚪 Logout</button>
-  <div id="telegram-icon" style="margin-left: 15px; margin-top: 20px;">
-  <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 24px; height: 24px; cursor: pointer;" />
-  </a>
-</div>
-
 </div>
 
 
@@ -304,6 +298,11 @@ body.sidebar-open main {
   </div>
 
   <h3 style="margin-bottom: 10px;">📊 Available Investment Levels</h3>
+   <div id="telegram-icon" style="margin-left: 15px; margin-top: 20px;">
+  <a href="https://t.me/+Tst3RWgtzow3NmJk" target="_blank" title="Join Telegram Support">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" style="width: 24px; height: 24px; cursor: pointer;" />
+  </a>
+</div>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px;">
     <div style="border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #fff;">
@@ -516,7 +515,7 @@ const API = "https://invester-1.onrender.com/api";
       userId = data.user?.id || data.session?.user?.id;
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
-      document.getElementById("telegram-icon").style.display = "block";
+     
 
       showSection("dashboard");
     } catch {
