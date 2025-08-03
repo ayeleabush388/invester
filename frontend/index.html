@@ -222,9 +222,56 @@ body.sidebar-open main {
 }
 
 
+
+
+
+
+
+
+#top-banner {
+  background: #0044aa;
+  color: white;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+#footer-bar {
+  background: #222;
+  color: #ddd;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+
+
+
+
+    
   </style>
 </head>
 <body>
+
+
+<!-- Top Colored Container -->
+<div id="top-banner">
+  <h2>📢 Welcome to the Chicken Investment Platform</h2>
+</div>
+
+
+  
   <!-- Top Left Menu Icon -->
 <div id="profile-menu-container" style="display: none;">
   <div class="menu-icon" onclick="toggleSidebar()">☰</div>
@@ -749,5 +796,10 @@ document.addEventListener("click", function (event) {
   showSection("login-section");
 
 </script>
+  <!-- Footer Bar -->
+<footer id="footer-bar">
+  <p>&copy; 2025 Chicken Cooperative Investment. All rights reserved.</p>
+</footer>
+
 </body>
 </html>
