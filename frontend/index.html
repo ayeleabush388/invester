@@ -269,10 +269,21 @@ body.sidebar-open main {
 <div id="profile-menu-container" style="display: none;">
   <div class="menu-icon" onclick="toggleSidebar()">☰</div>
 </div>
-<!-- Top Colored Container -->
-<div id="top-banner">
-  <h2>📢 Welcome to the Chicken Investment Platform</h2>
+<!-- WRAPPER that stays hidden before login -->
+<div id="login-dependent-ui" style="display: none;">
+  <!-- Top Colored Container -->
+  <div id="top-banner">
+    <h2>📢 Welcome to the Chicken Investment Platform</h2>
+  </div>
+
+  <!-- Your other sections like dashboard go here -->
+
+  <!-- Footer -->
+  <footer id="footer-bar">
+    <p>&copy; 2025 Chicken Cooperative Investment. All rights reserved.</p>
+  </footer>
 </div>
+
   
 <!-- Sidebar Dropdown Menu -->
 <div id="sidebar-menu">
@@ -492,8 +503,6 @@ body.sidebar-open main {
 
 <script>
 
-document.getElementById("after-login-elements").style.display = "block";
-document.getElementById("after-login-footer").style.display = "block";
 
   
   function toggleMenu() {
@@ -569,8 +578,7 @@ const API = "https://invester-1.onrender.com/api";
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
      
-document.getElementById("after-login-elements").style.display = "block";
-document.getElementById("after-login-footer").style.display = "block";
+document.getElementById("login-dependent-ui").style.display = "block";
 
       showSection("dashboard");
     } catch {
@@ -800,10 +808,7 @@ document.addEventListener("click", function (event) {
   showSection("login-section");
 
 </script>
-  <!-- Footer Bar -->
-<footer id="footer-bar">
-  <p>&copy; 2025 Chicken Cooperative Investment. All rights reserved.</p>
-</footer>
+
 
 </body>
 </html>
