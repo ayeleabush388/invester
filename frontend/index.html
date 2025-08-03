@@ -269,20 +269,12 @@ body.sidebar-open main {
 <div id="profile-menu-container" style="display: none;">
   <div class="menu-icon" onclick="toggleSidebar()">☰</div>
 </div>
-<!-- WRAPPER that stays hidden before login -->
-<div id="login-dependent-ui" style="display: none;">
+<div id="after-login-elements" style="display: none;">
   <!-- Top Colored Container -->
   <div id="top-banner">
     <h2>📢 Welcome to the Chicken Investment Platform</h2>
   </div>
-  <!-- Your other sections like dashboard go here -->
-
-  <!-- Footer -->
-  <footer id="footer-bar">
-    <p>&copy; 2025 Chicken Cooperative Investment. All rights reserved.</p>
-  </footer>
 </div>
-
 
  
   
@@ -496,6 +488,12 @@ body.sidebar-open main {
 
 
 
+<div id="after-login-footer" style="display: none;">
+  <!-- Footer Bar -->
+  <footer id="footer-bar">
+    <p>&copy; 2025 Chicken Cooperative Investment. All rights reserved.</p>
+  </footer>
+</div>
 
 
 
@@ -578,7 +576,10 @@ const API = "https://invester-1.onrender.com/api";
       document.getElementById("login-section").classList.add("hidden");
       showProfileMenu(); // Show the profile icon menu
      
-document.getElementById("login-dependent-ui").style.display = "block";
+
+document.getElementById("after-login-elements").style.display = "block";
+document.getElementById("after-login-footer").style.display = "block";
+
 
       showSection("dashboard");
     } catch {
