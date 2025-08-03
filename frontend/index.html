@@ -726,6 +726,25 @@ const API = "https://invester-1.onrender.com/api";
 
 
 
+
+  // Close sidebar when clicking outside of it
+document.addEventListener("click", function (event) {
+  const sidebar = document.getElementById("sidebar-menu");
+  const menuIcon = document.querySelector(".menu-icon");
+
+  // If the sidebar is open and click is outside both sidebar and menu icon
+  if (
+    document.body.classList.contains("sidebar-open") &&
+    !sidebar.contains(event.target) &&
+    !menuIcon.contains(event.target)
+  ) {
+    sidebar.style.left = "-240px";
+    document.body.classList.remove("sidebar-open");
+  }
+});
+
+
+
   // Initial load
   showSection("login-section");
 
