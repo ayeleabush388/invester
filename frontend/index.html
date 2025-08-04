@@ -287,6 +287,7 @@ body.sidebar-open main {
   <button onclick="showSection('withdrawal-dashboard')">📋 Withdrawals</button>
 
   <button onclick="showSection('loan')">💳 Loan</button>
+   <button onclick="showSection('about-us')">ℹ️ About Us</button>
   <button onclick="logout()">🚪 Logout</button>
 </div>
 
@@ -488,6 +489,35 @@ body.sidebar-open main {
 
 
 
+<section id="about-us" style="padding: 40px; background-color: #f9f9f9;">
+  <div style="max-width: 800px; margin: auto; text-align: center;">
+    <h2 style="color: #2c3e50;">🐣 ስለ እኛ</h2>
+    <p style="font-size: 18px; color: #555;">
+      እንኳን ወደ <strong>የወጣቶች ትራፊክና በእንስሳት ምርት ላይ የተመሰረተ የኢንቨስትመንት መድረክ</strong> በደህና መጡ። ይህ መድረክ የወጣቶችን እድገት ለማበረታታት በተመረጡ ዘዴዎች የተሠራ ነው፡፡
+    </p>
+    <p style="font-size: 18px; color: #555;">
+      እኛ በተመረጡ የኢንቨስትመንት ዘዴዎች እና በዕድገት ውስጥ በተመረጡ አገልግሎቶች የተመሰረተ ዕድገትን እንመለከታለን። በዚህ መድረክ ላይ ተጠቃሚዎች በ<strong>ዶሮና እንቁላል ምርት</strong> ላይ ሊያቀርቡ ይችላሉ። እነሱም በዕለታዊ ትርፍ እንዲተካ ይደርሳሉ።
+    </p>
+    <p style="font-size: 18px; color: #555;">
+      እንዲሁም <strong>እቃ በአነስ ዋጋ መበደር እና እቃ በእናቅርብ መተባበር</strong> እንዲችሉ የብድር አገልግሎት እንደተዘጋጀ ተጠቃሚዎች ሊጠቀሙበት ይችላሉ።
+    </p>
+
+    <h3 style="margin-top: 30px; color: #2c3e50;">🌱 የእኛ ልዩነት:</h3>
+    <ul style="text-align: left; display: inline-block; font-size: 17px; color: #444;">
+      <li>🐔 በእውነተኛ የዶሮ እና እንቁላል ምርት ላይ ኢንቨስትመንት</li>
+      <li>💸 በዕለታዊ ትርፍ አመልካች</li>
+      <li>👥 ከጓደኞች ጋር በመካፈል ተጨማሪ ብር ማግኘት</li>
+      <li>💳 ተጠቃሚዎችን የሚደግፉ የብድር አገልግሎቶች</li>
+      <li>📱 በቀላሉ ሊጠቀሙበት የሚችሉ የሞባይል መስመር</li>
+    </ul>
+  </div>
+</section>
+
+
+
+
+  
+
 <div id="after-login-footer" style="display: none;">
   <!-- Footer Bar -->
   <footer id="footer-bar">
@@ -517,7 +547,7 @@ const API = "https://invester-1.onrender.com/api";
   let userId = null;
 
   function showSection(section) {
-    const sections = ["dashboard", "invest", "balance", "withdraw", "withdrawal-dashboard", "level", "loan"];
+    const sections = ["dashboard", "invest", "balance", "withdraw", "withdrawal-dashboard", "level", "loan", "about-us"];
     sections.forEach(id => document.getElementById(`${id}-section`).classList.add("hidden"));
     document.getElementById(`${section}-section`).classList.remove("hidden");
 
