@@ -310,6 +310,9 @@ body.sidebar-open main {
     <input type="password" id="signup-password" placeholder="Password" />
     <button onclick="signup()">Sign Up</button>
     <button onclick="toggleLogin()">Back to Login</button>
+    <p id="signup-message" style="margin-top: 10px; font-weight: bold;"></p>
+
+
   </div>
 
   <!-- Level Investment Section -->
@@ -633,7 +636,7 @@ document.getElementById("after-login-footer").style.display = "block";
       const data = await res.json();
       if (!res.ok) return showMessage(data.error || "Signup failed", true);
 
-      showMessage("Signup successful. You can now log in.");
+    showMessage("Successfully signed up. Please confirm your email.");
       toggleLogin();
     } catch {
       showMessage("Network error. Please try again.", true);
